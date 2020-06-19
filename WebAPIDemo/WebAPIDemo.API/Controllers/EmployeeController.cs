@@ -18,7 +18,7 @@ namespace WebAPIDemo.API.Controllers
         private WebAPIDemoAPIContext db = new WebAPIDemoAPIContext();
 
         // GET: api/Employee
-        public IQueryable<Employee> GetEmployees()
+        public IEnumerable<Employee> GetEmployees()
         {
             return db.Employees;
         }

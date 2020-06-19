@@ -19,5 +19,40 @@ namespace WebAPIDemo.Web.Controllers
 
             return View(employees);
         }
+
+        public ActionResult AddorEditEmployee(int id = 0)
+		{
+			if (id == 0)
+			{
+                return View(new Employee());
+            }
+			else
+			{
+                HttpResponseMessage response = HttpConfiguration.httpClient.GetAsync("Employee/"+id.ToString()).Result;
+             
+                return View(response.Content.ReadAsAsync<Employee>().Result);
+			}
+        }
+
+        [HttpPost]
+        public ActionResult AddorEditEmployee(Employee employee)
+        {
+			if (employee.EmployeeID == 0)
+			{
+                HttpResponseMessage response = HttpConfiguration.httpClient.PostAsJsonAsync("Employee", employee).Result;
+                TempData["message"] = "Employee Added Successfully";
+            }
+			else
+			{
+                HttpResponseMessage response = HttpConfiguration.httpClient.PutAsJsonAsync("Employee/"+ employee.EmployeeID,employee).Result;
+                TempData["message"] = "Employee Updated Successfully";
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DeleteEmployee(int id)
+		{
+            return RedirectToAction("Index");
+        }
     }
 }

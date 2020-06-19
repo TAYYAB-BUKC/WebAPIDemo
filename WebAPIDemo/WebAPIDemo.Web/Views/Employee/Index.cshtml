@@ -7,7 +7,7 @@
 <h2>Employees List</h2>
 
 <p>
-	<a class="btn btn-primary" href="@Url.Action("AddEmployee","Employee")"> <i class="fa fa-plus-circle">   Create New Employee</i></a>
+	<a class="btn btn-primary" href="@Url.Action("AddorEditEmployee","Employee")"> <i class="fa fa-plus-circle">   Create New Employee</i></a>
 </p>
 <table class="table table-striped">
 		<tr>
@@ -42,12 +42,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.Salary)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeID })
-        </td>
+		<td>
+			<a href="@Url.Action("AddorEditEmployee","Employee", new { id = item.EmployeeID })" class="btn btn-primary"><i class="fa fa-pencil"> Edit</i></a>
+			<a href="@Url.Action("DeleteEmployee","Employee", new { id = item.EmployeeID })" class="btn btn-primary"><i class="fa fa-trash"> Delete</i></a>
+		</td>
     </tr>
 }
 
 </table>
+
+@section scripts{
+    
+	<script>
+        $(function myfunction() {
+            var message = '@TempData["message"]';
+            if (message != '') {
+                alertify.success(message);
+            }
+        });
+    </script>
+    }

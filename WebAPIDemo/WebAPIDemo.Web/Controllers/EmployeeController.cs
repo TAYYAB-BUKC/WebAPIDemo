@@ -52,6 +52,8 @@ namespace WebAPIDemo.Web.Controllers
 
         public ActionResult DeleteEmployee(int id)
 		{
+            HttpResponseMessage response = HttpConfiguration.httpClient.DeleteAsync("Employee/" + id.ToString()).Result;
+            TempData["message"] = "Employee Deleted Successfully";
             return RedirectToAction("Index");
         }
     }
